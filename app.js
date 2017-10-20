@@ -8,9 +8,13 @@ app.disable('x-powered-by')
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 
+const robotRoutes = require('./src/routes/robot.js')
+
 app.get('/', (req, res, next) => {
-  res.json({message: 'connected'}).status(200)
+  res.json({message: 'Home page: go to robots'}).status(200)
 })
+
+app.use('/robots', robotRoutes)
 
 app.use((err, req, res, next) => {
   const status = 500 || err.status
