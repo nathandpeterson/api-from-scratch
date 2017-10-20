@@ -19,7 +19,6 @@ function create(req, res, err) {
 }
 
 function update(req, res, err){
-
   const result = models.update(req.body, req.params.id)
   if (result.errors) {
     return res.json({ status: 400, error: result.errors[0] })
@@ -27,5 +26,13 @@ function update(req, res, err){
   res.status(201).json({data : result})
 }
 
+function destroy(req, res, err){
+  const result = models.destroy(req.params.id)
+  if (result.errors) {
+    return res.json({ status: 400, error: result.errors[0] })
+  }
+  res.status(201).json({data : result})
+}
 
-module.exports = {getAll, getOne, create, update}
+
+module.exports = {getAll, getOne, create, update, destroy}

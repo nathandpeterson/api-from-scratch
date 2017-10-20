@@ -54,6 +54,12 @@ function update(body, id){
 
 function destroy(id){
   let reqRobot = robots.find(robot => robot.id === id)
+  for(let i = 0; i < robots.length; i++){
+    if(robots[i].id === id){
+      robots.splice(i, 1)
+    }
+  }
+  if(!reqRobot) return {status: 400, message: 'no robot found'}
   return reqRobot
 }
 
