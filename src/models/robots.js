@@ -1,4 +1,5 @@
 const uuid = require('uuid/v4')
+const _ = require('lodash')
 
 const robots = [{ id: uuid(),
                     name: 't-1000',
@@ -42,24 +43,18 @@ function create(body){
 function update(body, id){
   let reqRobot = robots.find(robot => robot.id === id)
   if(!reqRobot) return {status: 400, message: 'no robot found'}
-  for(let i = 0; i < robots.length; i++){
-    if(robots[i].id === id){
-      robots[i].name = body.name
-      robots[i].objective = body.objective
-      robots[i].materials = body.materials
-    }
-  }
-  return reqRobot
+  let reqInx = _.findIndex(robots, ['id', id])
+  robots[reqInx].name = body.name
+  robots[reqInx].objective = body.objective
+  robots[reqInx].materials = body.materials
+  return robots[reqInx]
 }
 
 function destroy(id){
   let reqRobot = robots.find(robot => robot.id === id)
-  for(let i = 0; i < robots.length; i++){
-    if(robots[i].id === id){
-      robots.splice(i, 1)
-    }
-  }
   if(!reqRobot) return {status: 400, message: 'no robot found'}
+  let reqInx = _.findIndex(robots, ['id', id])
+  robots.splice(reqInx, 1)
   return reqRobot
 }
 
